@@ -1,41 +1,41 @@
 1. Štruktúra projektu:
-/mysite - hlavný priečinok celého projektu 
-    - settings.py - nastavenia celého projektu (region, zaregistrovanie aplikácie, ...)
-    - urls.py - router pre celý projekt 
+/mysite - hlavný priečinok celého projektu
+- settings.py - nastavenia celého projektu (región, zaregistrovanie aplikácie, ...)
+- urls.py - router pre celý projekt
 
-/skola - priečinok aplikácie 
-    - models.py - definícia modelov (objektov) aplikácie a ich vlastnosti atributov a metód, spojenie s databázov 
-    - views.py - controller, logika aplikácie, spracovanie dát, posielanie do výstupu (template)
-    - templates/skola/index.html - šablóna pre výstup tzn. zobrazenie údajov 
+/skola - priečinok aplikácie
+- models.py - definícia modelov (objektov) aplikácie a ich atribútov a metód, spojenie s databázov
+- views.py - controller, logika aplikácie, spracovanie dát, posielanie do výstupu (template)
+- templates/skola/index.html - šablóna pre výstup tzn. zobrazenie údajov
 
-manage.py - správca projektu, súbor cez ktorý robíme s Djangom 
+manage.py - správca projektu, súbor cez ktorý robíme s Djangom
 db.sqlite3 - predvolená databáza (dá sa zmeniť v settings.py)
 
 2. Postup:
-- definicia modelov v models.py
-
+- definícia modelov v models.py:
 from django.db import models
 
 class Student(models.Model):
-    meno = models.CharField(max_length=20) # textove pole 
+    meno = models.CharField(max_length=20) # textové pole
     priezvisko = models.CharField(max_length=20)
     trieda = models.CharField(max_length=10)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.meno} {self.priezvisko}, {self.trieda}"
 
-- migracia modelov do databázy:
+
+- migrácia modelov do databázy:
 python manage.py makemigrations
 python manage.py migrate
 
-tieto príkazy musíme použiť vždy ak zmeníme niečo v models.py 
+tieto príkazy musíme použiť vždy ak zmeníme niečo v models.py
 
-- zahrnutie aplikácie do admin rozhrania 
-súbor admin.py 
+- registrácia aplikácie do admin rozhrania:
+súbor admin.py:
 from django.contrib import admin
-from .models import Student #naimportovanie modelu Student do amin.py 
+from .models import Student # naimportovanie modelu Student do admin.py
 
 admin.site.register(Student)
 
-- vytvorenie prvého uživatela
+- vytvorenie prvého superužívateľa:
 python manage.py createsuperuser
